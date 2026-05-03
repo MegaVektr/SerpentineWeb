@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
-import { Card } from "@/components/ui/Card";
 import { UtilitarianHero } from "@/components/marketing/UtilitarianHero";
 import { CTABlock } from "@/components/marketing/CTABlock";
 import { JsonLd, ORG_SCHEMA, breadcrumb } from "@/lib/schema";
@@ -14,19 +13,15 @@ export const metadata: Metadata = pageMetadata({
   path: "/company/about",
 });
 
-type LegalRow = { label: string; value: string; placeholder?: boolean };
+type LegalRow = { label: string; value: string };
 
+// Only rows with real, publicly-disclosable values appear here.
+// Full registration details (registered name, MBS, EDB, registered office,
+// VAT) are provided on request via legal@spnt.io and in every customer MSA.
 const LEGAL_ROWS: LegalRow[] = [
-  { label: "Name", value: "[Registered legal name]", placeholder: true },
   { label: "Jurisdiction", value: "Republic of North Macedonia" },
-  { label: "Registered office", value: "[Address, Skopje]", placeholder: true },
-  {
-    label: "Company registration",
-    value: "[MBS number]",
-    placeholder: true,
-  },
-  { label: "Tax ID", value: "[EDB number]", placeholder: true },
-  { label: "VAT", value: "[if applicable]", placeholder: true },
+  { label: "Status", value: "EU-candidate country, aligned with EU digital regulations" },
+  { label: "Full registration details", value: "Available on request — legal@spnt.io" },
 ];
 
 export default function AboutPage() {
@@ -91,32 +86,26 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* Our founder */}
+      {/* Legal entity */}
       <Section tone="light-raised">
         <Container size="narrow">
-          <h2 className="t-section balance">Our founder.</h2>
-          <Card
-            tone="light"
-            className="mt-8 border-l-2 border-[var(--bronze)]"
-          >
-            <p className="t-body italic text-[var(--ink-muted)]">
-              Founder bio placeholder. Reference: 15+ years across full-stack
-              development, system architecture, DevOps, Linux administration,
-              cybersecurity (offensive and defensive), and AI-assisted
-              development.
-            </p>
-          </Card>
-        </Container>
-      </Section>
-
-      {/* Legal entity */}
-      <Section tone="light">
-        <Container size="narrow">
           <h2 className="t-section balance">Legal entity.</h2>
-          <div className="mt-10 overflow-x-auto">
+          <p className="t-body mt-6 text-[var(--ink-soft)]">
+            Full registration details (registered name, registered office,
+            company registration number, tax ID, VAT) appear in every customer
+            MSA and are available on request from{" "}
+            <a
+              href="mailto:legal@spnt.io"
+              className="text-[var(--bronze-deep-on-light)] underline underline-offset-[3px] decoration-1 hover:decoration-2"
+            >
+              legal@spnt.io
+            </a>
+            .
+          </p>
+          <div className="mt-8 overflow-x-auto">
             <table className="border-collapse w-full text-[15px]">
               <caption className="sr-only">
-                SPNT legal entity registration details
+                SPNT legal entity public details
               </caption>
               <tbody>
                 {LEGAL_ROWS.map((row) => (
@@ -127,13 +116,7 @@ export default function AboutPage() {
                     >
                       {row.label}
                     </th>
-                    <td
-                      className={
-                        row.placeholder
-                          ? "border border-[var(--stone-line)] px-4 py-3 align-top text-[var(--ink-muted)] italic"
-                          : "border border-[var(--stone-line)] px-4 py-3 align-top text-[var(--ink)]"
-                      }
-                    >
+                    <td className="border border-[var(--stone-line)] px-4 py-3 align-top text-[var(--ink)]">
                       {row.value}
                     </td>
                   </tr>

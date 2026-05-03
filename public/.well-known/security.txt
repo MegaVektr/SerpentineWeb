@@ -1,7 +1,6 @@
 Contact: mailto:security@spnt.io
 Contact: https://spnt.io/security#disclosure
 Expires: 2027-01-01T00:00:00.000Z
-Encryption: https://spnt.io/pgp-key.txt
 Preferred-Languages: en
 Canonical: https://spnt.io/.well-known/security.txt
 Policy: https://spnt.io/legal/security-disclosure

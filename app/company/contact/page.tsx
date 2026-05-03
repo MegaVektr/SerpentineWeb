@@ -7,6 +7,7 @@ import { Link, ArrowLink } from "@/components/ui/Link";
 import { CTABlock } from "@/components/marketing/CTABlock";
 import { UtilitarianHero } from "@/components/marketing/UtilitarianHero";
 import { JsonLd } from "@/lib/schema";
+import { MailtoForm } from "./_components/MailtoForm";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact & Book a Demo | Serpentine",
@@ -95,9 +96,9 @@ function AnchorNav() {
 
 function DemoForm() {
   return (
-    <form
-      action="#"
-      method="post"
+    <MailtoForm
+      to="demo@spnt.io"
+      subject="Demo request"
       className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2"
     >
       <Honeypot />
@@ -219,15 +220,15 @@ function DemoForm() {
           Submit
         </Button>
       </div>
-    </form>
+    </MailtoForm>
   );
 }
 
 function SalesForm() {
   return (
-    <form
-      action="#"
-      method="post"
+    <MailtoForm
+      to="sales@spnt.io"
+      subject="Sales inquiry"
       className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2"
     >
       <Honeypot />
@@ -321,15 +322,15 @@ function SalesForm() {
           Submit
         </Button>
       </div>
-    </form>
+    </MailtoForm>
   );
 }
 
 function WaitlistForm() {
   return (
-    <form
-      action="#"
-      method="post"
+    <MailtoForm
+      to="waitlist@spnt.io"
+      subject="Beta / early-access waitlist"
       className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2"
     >
       <Honeypot />
@@ -400,15 +401,15 @@ function WaitlistForm() {
           Submit
         </Button>
       </div>
-    </form>
+    </MailtoForm>
   );
 }
 
 function PartnershipsForm() {
   return (
-    <form
-      action="#"
-      method="post"
+    <MailtoForm
+      to="partnerships@spnt.io"
+      subject="Partnership inquiry"
       className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2"
     >
       <Honeypot />
@@ -481,7 +482,7 @@ function PartnershipsForm() {
           Submit
         </Button>
       </div>
-    </form>
+    </MailtoForm>
   );
 }
 

@@ -32,7 +32,7 @@ const ovhCerts: string[] = [
   "ISO/IEC 27017 (cloud security)",
   "ISO/IEC 27018 (cloud privacy)",
   "SOC 2 Type II",
-  "HDS (French health data hosting)",
+  "HDS (EU health data hosting standard)",
   "PCI-DSS (payment card industry)",
 ];
 
@@ -150,7 +150,7 @@ export default function SecurityPage() {
             </li>
             <li className="flex gap-3">
               <BronzeBullet />
-              <span>PGP key: [link to public key]</span>
+              <span>PGP key: available on request — reply to the acknowledgment email</span>
             </li>
             <li className="flex gap-3">
               <BronzeBullet />

@@ -45,11 +45,10 @@ export default function SecurityDisclosurePage() {
               <a href="mailto:security@spnt.io" className="underline">
                 security@spnt.io
               </a>
-              , optionally PGP-encrypted (key at{" "}
-              <a href="/pgp-key.txt" className="underline">
-                /pgp-key.txt
-              </a>
-              ). Include reproduction steps, affected URL or version, and an impact assessment.
+              . PGP key available on request — reply to the acknowledgment
+              email to receive it before sending the report. Include
+              reproduction steps, affected URL or version, and an impact
+              assessment.
             </p>
 
             <h2>Our commitments</h2>

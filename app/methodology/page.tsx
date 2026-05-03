@@ -188,8 +188,8 @@ export default function MethodologyPage() {
         sub={heroSub}
         ctaPrimary={{ label: "Book a Demo", href: "/company/contact#demo" }}
         ctaSecondary={{
-          label: "Download a Sample Report →",
-          href: "/downloads/sample-odbrana-report.pdf",
+          label: "Request a sample report →",
+          href: "/company/contact#sales",
         }}
       />
 
@@ -341,10 +341,10 @@ export default function MethodologyPage() {
           </ul>
           <div className="mt-10">
             <ArrowLink
-              href="/downloads/sample-odbrana-report.pdf"
+              href="/company/contact#sales"
               tone="on-dark"
             >
-              Download a sample report
+              Request a sample report
             </ArrowLink>
           </div>
         </Container>
@@ -366,7 +366,7 @@ export default function MethodologyPage() {
               >
                 security@spnt.io
               </a>{" "}
-              (PGP key available) or via our{" "}
+              (PGP key available on request) or via our{" "}
               <code className="text-[var(--ink-on-dark)]">
                 /.well-known/security.txt
               </code>

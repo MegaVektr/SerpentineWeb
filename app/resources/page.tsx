@@ -33,9 +33,9 @@ const featured: FeaturedPillar[] = [
   {
     caption: "SAMPLE",
     title: "Sample Odbrana Report",
-    body: "A full audit report — executive summary, findings, remediation guidance, compliance mappings.",
-    cta: "Download PDF →",
-    href: "/downloads/sample-odbrana-report.pdf",
+    body: "A full audit report — executive summary, findings, remediation guidance, compliance mappings. Available on request.",
+    cta: "Request sample →",
+    href: "/company/contact#sales",
   },
   {
     caption: "BLOG",
@@ -56,7 +56,7 @@ const featured: FeaturedPillar[] = [
 const categories: { label: string; href: string }[] = [
   { label: "Guides", href: "/blog?category=guides" },
   { label: "Methodology", href: "/methodology" },
-  { label: "Sample Reports", href: "/downloads/sample-odbrana-report.pdf" },
+  { label: "Sample Reports", href: "/company/contact#sales" },
   { label: "Changelog", href: "/changelog" },
   { label: "Blog", href: "/blog" },
 ];
@@ -128,11 +128,11 @@ const resources: ResourceCard[] = [
   },
   {
     caption: "SAMPLE",
-    title: "Sample Odbrana Report (PDF)",
+    title: "Sample Odbrana Report",
     description:
-      "Executive summary, findings, remediation guidance, and compliance mappings from a full Odbrana audit.",
-    cta: "Download PDF →",
-    href: "/downloads/sample-odbrana-report.pdf",
+      "Executive summary, findings, remediation guidance, and compliance mappings from a full Odbrana audit. Available on request via sales.",
+    cta: "Request sample →",
+    href: "/company/contact#sales",
   },
   {
     caption: "TRUST",

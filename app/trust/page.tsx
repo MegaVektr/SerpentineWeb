@@ -169,8 +169,8 @@ export default function TrustPage() {
           <ArrowLink href="/legal/dpa" tone="on-dark">
             Download Data Processing Agreement (DPA)
           </ArrowLink>
-          <ArrowLink href="/downloads/sccs.pdf" tone="on-dark">
-            Download Standard Contractual Clauses (SCCs)
+          <ArrowLink href="/company/contact#sales" tone="on-dark">
+            Request Standard Contractual Clauses (SCCs)
           </ArrowLink>
           <ArrowLink href="/legal/privacy" tone="on-dark">
             View privacy policy

@@ -16,7 +16,7 @@ export const ORG_SCHEMA: JsonLD = {
   "@type": "Organization",
   name: "SPNT",
   url: "https://spnt.io",
-  logo: "https://spnt.io/logo/spnt-mark.svg",
+  logo: "https://spnt.io/logo/serpentine-mark.svg",
   sameAs: ["https://github.com/spnt-io", "https://www.linkedin.com/company/spnt"],
   founder: { "@type": "Person", name: "SPNT Founding Team" },
   foundingLocation: { "@type": "Country", name: "North Macedonia" },

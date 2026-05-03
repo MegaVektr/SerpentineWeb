@@ -238,8 +238,8 @@ export default function OdbranaPage() {
         sub="Nine specialized scanner modules across one unified platform. Web, code, cloud, containers, APIs, mobile, blockchain, AI/ML, and network infrastructure — audited continuously, prioritized intelligently, reported clearly."
         ctaPrimary={{ label: "Book a Demo", href: "/company/contact#demo" }}
         ctaSecondary={{
-          label: "See a sample report →",
-          href: "/downloads/sample-odbrana-report.pdf",
+          label: "Request a sample report →",
+          href: "/company/contact#sales",
         }}
         right={<DashFindings />}
       />
@@ -315,10 +315,10 @@ export default function OdbranaPage() {
 
           <div className="mt-8 text-center">
             <ArrowLink
-              href="/downloads/sample-odbrana-report.pdf"
+              href="/company/contact#sales"
               tone="on-dark"
             >
-              Download a full sample report (PDF) →
+              Request a full sample report
             </ArrowLink>
           </div>
         </Container>
@@ -375,8 +375,8 @@ export default function OdbranaPage() {
         body="Book a demo and we will scan an asset you control during the call. Real findings, real report, no commitment."
         primary={{ label: "Book a Demo", href: "/company/contact#demo" }}
         secondary={{
-          label: "See Sample Report →",
-          href: "/downloads/sample-odbrana-report.pdf",
+          label: "Request Sample Report →",
+          href: "/company/contact#sales",
         }}
       />
     </>
