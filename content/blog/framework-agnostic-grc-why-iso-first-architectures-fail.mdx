@@ -1,0 +1,122 @@
+---
+title: "Framework-agnostic GRC: why ISO-first architectures fail"
+description: "When you build your GRC system around one framework, every other framework becomes a translation problem. Architect canonically instead."
+category: "Compliance"
+author: "SPNT Engineering"
+datePublished: "2026-04-09"
+dateModified: "2026-04-09"
+---
+
+Most GRC platforms have a framework they were born around. Sometimes
+it was ISO 27001. Sometimes SOC 2. Sometimes NIST CSF. The native
+framework's structure quietly becomes the platform's data model:
+controls map one-to-one onto its clauses, evidence is bucketed by its
+domains, reports are shaped like its annexes. Other frameworks are
+then supported by translation.
+
+This works until the second framework matters. After that, every new
+framework is a translation problem layered on top of the previous
+translation problem, and the platform's coherence drains slowly into
+the mapping tables.
+
+## Where the failure shows up
+
+Consider an organization with ISO 27001, SOC 2, NIST CSF, and GDPR
+obligations. Each framework asks for similar things in different
+language, with different boundaries, and different expectations of
+evidence.
+
+In an ISO-first GRC system, ISO 27001 looks crisp. Annex A maps
+straight to the platform's control catalog. Evidence rolls up
+naturally into the categories the ISO auditor expects. Reports come
+out the right shape.
+
+SOC 2 then arrives. The platform supports it via a mapping: this ISO
+control corresponds to that SOC 2 criterion, more or less. When the
+mapping is one-to-one, the evidence flows. When it is many-to-many —
+which is most of the time — judgement has to be applied per-control.
+The mapping tables grow. Different team members make different
+judgement calls. Audit comes around and the SOC 2 evidence package is
+not quite the shape the auditor expects, because the underlying model
+is still ISO.
+
+NIST CSF stacks badly on top of either of the previous two, because
+its structure is functional (Identify, Protect, Detect, Respond,
+Recover) rather than control-clause-based. The mapping work doubles.
+
+GDPR is structurally different again — it is principle-based, not
+clause-based — and has obligations that do not correspond cleanly to
+any operational control taxonomy.
+
+By the time a fifth framework lands, the platform is mostly mapping
+tables. The original framework still works well. Everything else is
+managed.
+
+## The canonical alternative
+
+The other architecture starts from a different premise: the platform
+does not have a native framework. It has a canonical control set. Every
+framework is a *projection* onto the canonical set, not the other way
+around.
+
+This sounds like a small inversion. It changes a lot.
+
+In a canonical model, evidence attaches to canonical controls.
+Frameworks are views: ISO 27001 is the set of canonical controls
+visible through the ISO lens, with ISO's clause IDs and ISO's
+expected report shape. SOC 2 is a different view onto the same
+underlying records. NIST CSF is a third view. GDPR is a fourth.
+
+When you collect evidence, you do it against the canonical control —
+not against the framework that happens to be in your audit cycle this
+quarter. The evidence then satisfies every framework view that the
+control participates in, automatically.
+
+When you onboard a new framework, you map its clauses onto the
+canonical set once, in the platform's vocabulary. You do not re-map
+it onto each previous framework.
+
+When auditors disagree about scope, you resolve the disagreement at
+the canonical control layer, where it is structural, rather than at
+each framework view, where it is interpretive.
+
+## Concrete shape: how the projections work
+
+A canonical control might be expressed as something like *credentials
+are rotated on a defined cadence and rotation is logged*. It is
+framework-agnostic on purpose.
+
+ISO 27001's view of that control points to A.5.16 (identity
+management). SOC 2's view points to CC6.1 (logical access). NIST
+CSF's view points to PR.AC-1 (identities and credentials managed).
+GDPR's view points to Article 32(1)(b) (technical security measures).
+
+Each view inherits the same evidence pointer. The evidence record —
+a rotation log, a policy reference, a configuration snapshot — does
+not get duplicated. When a new framework lands, the work is to map
+its clauses onto the canonical control, not to redo the evidence.
+
+## What this requires
+
+A canonical-first architecture imposes one real cost: somebody has to
+own the canonical control set. It is not a derived artifact. It has
+to be designed, versioned, and maintained as a primary product.
+Frameworks evolve, and the canonical set evolves with them — but it
+evolves on its own cadence, not on the cadence of any single
+framework's revisions.
+
+Regulativa is built this way. Its control catalog is canonical. ISO
+27001, SOC 2, NIST CSF, GDPR, NIS2, DORA, CIS Benchmarks, CCPA — each
+is a projection. Evidence collected once is reusable across every
+framework whose projections include the relevant control. Audit
+preparation becomes a question of which view to render, not which
+mappings to redo.
+
+We are not going to claim this is novel — the idea is older than the
+companies that ship ISO-first platforms. We are going to claim it
+holds up better as the framework count grows, which it does, and as
+audit cycles compress, which they will.
+
+If you are evaluating a GRC platform, the question to ask is whether
+its native model is a framework or a canonical control set. The
+answer determines what your work looks like in three years.

@@ -1,0 +1,9 @@
+---
+date: 2026-03-18
+product: Postava
+title: "Cosign signature verification on deploy (Pro)"
+---
+
+Postava Pro can now verify container image signatures with Cosign before a deploy proceeds. Unsigned images, or images signed by keys outside the configured trust policy, are blocked at the push step rather than after rollout. The check runs alongside the existing health polling and webhook notification flow.
+
+[Docs →](/docs/postava/cosign)

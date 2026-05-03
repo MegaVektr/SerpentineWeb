@@ -1,0 +1,9 @@
+---
+date: 2026-02-05
+product: Postava
+title: "Webhook notifications for health and drift"
+---
+
+Postava now emits webhook events on health-check failures and drift detections. Payloads are shaped to drop into Slack, Microsoft Teams, and PagerDuty without an intermediate adapter, and include the host, environment, and the specific check or drift item that triggered the event. Endpoints are configured per environment.
+
+[Docs →](/docs/postava/webhooks)

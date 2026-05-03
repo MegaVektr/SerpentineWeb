@@ -1,0 +1,114 @@
+---
+title: "AI-assisted security testing: boundaries and failure modes"
+description: "Where AI helps real security work, where it actively hurts, and the rules we enforce in code to keep AI honest."
+category: "Methodology"
+author: "SPNT Engineering"
+datePublished: "2026-03-04"
+dateModified: "2026-03-04"
+---
+
+There is a credible version of AI in security tooling, and there is a
+hype version. The hype version generates findings. The credible
+version interprets them. Telling the two apart matters, because the
+failure modes are not symmetric — the hype version fails in ways that
+look like value until an auditor reads the report.
+
+This is how we think about the boundary at SPNT, and how we enforce it
+in code rather than in marketing.
+
+## Where AI actually helps
+
+There are a small number of jobs that AI does materially better than
+the deterministic alternative.
+
+The first is **interpretation of scanner output.** A SAST tool emits a
+finding with a rule ID, a stack trace, and a snippet. Translating that
+into a paragraph an engineer can act on — what the bug is, why it
+matters in this codebase, where to look — is a language task. AI is
+good at language tasks.
+
+The second is **context-aware payload generation.** A DAST scan that
+has already crawled a target understands its conventions. The login
+endpoint takes JSON with these field names. The error responses have
+this structure. Generating fuzz payloads that respect those conventions
+yields better signal than generic dictionaries. AI is good at
+producing structured output that fits a pattern it has seen.
+
+The third is **prioritization narrative.** Risk scoring is
+deterministic. Explaining why a particular finding ranks where it
+does — which assets it affects, which exploit chains it enables, which
+business processes it touches — is again a language task on top of
+deterministic inputs.
+
+## Where AI actively hurts
+
+The failure modes are specific and have specific causes.
+
+**Hallucinated findings.** An AI asked to "review this codebase for
+security issues" will produce confident, plausible findings whether or
+not they exist. The findings sound right. They cite line numbers. They
+reference real CVEs. They are also, often, wrong. The model is not
+detecting; it is generating. Once a hallucinated finding is in a
+report, the cost of removing it falls on the human reader.
+
+**Severity inflation.** Models trained on security writing inherit the
+genre's tendency to overstate. Asked to assess a finding, they default
+to the higher of two plausible severity ratings. Over a thousand
+findings this distorts the prioritization in a direction that always
+favors urgency.
+
+**Evidence laundering.** A model summarizing a finding and a model
+generating evidence for it are different jobs, but a single prompt
+will happily do both. The output looks like evidence. It is not
+evidence; it is a summary that has lost its trace back to the
+underlying scanner record.
+
+**Confidence collapse.** Most LLM outputs do not naturally carry a
+calibrated confidence. "I am unsure" is not a default behavior. Without
+an explicit confidence track, low-quality findings reach the report
+with the same surface authority as high-quality ones.
+
+## The rules we enforce in code
+
+We do not rely on prompt discipline to avoid these failure modes. We
+enforce them structurally.
+
+**No finding without a deterministic source.** A finding cannot enter
+the Odbrana graph unless it has a non-AI origin: a scanner rule, a
+configuration check, an exploit confirmation. AI is allowed to
+*describe* findings, *prioritize* them, *triage false positives* — but
+it is not allowed to be the sole reason a finding exists. This is a
+type-system constraint, not a guideline.
+
+**Source traceability is mandatory.** Every AI-generated paragraph
+points back to the underlying record it summarizes. Reports show this
+trace. If a customer or auditor wants to see the scanner output
+behind a finding's narrative, the trace is one click.
+
+**Confidence is explicit.** AI outputs carry a confidence label that
+the model produces explicitly. Low-confidence outputs are flagged for
+human review and never auto-elevated to high-confidence narrative. We
+calibrate the confidence labels against historical accuracy on each
+scanner type.
+
+**Interpretation versus source is a hard boundary.** The platform
+distinguishes *what was observed* from *what an AI thinks about it*,
+visually and structurally. They are different fields. They render
+differently. A control assertion can never reduce to an AI
+interpretation alone — it must point to a piece of evidence.
+
+## Why this matters at audit time
+
+When an auditor asks how a finding was produced, the answer must hold
+up. "An AI noticed it" is not an answer. "A SAST scanner with this
+rule version, on this commit, produced this match, and the AI summary
+is annotated as interpretation" is an answer.
+
+We have made this boundary load-bearing on purpose. It is the only
+boundary that survives contact with a serious external review. Every
+shortcut around it produces material that cannot be defended — and
+defending findings is half of what audit-grade reporting is for.
+
+The honest version of AI in security tooling is narrower than the
+marketed version. It is also more useful, because the work it does
+holds up under the kind of scrutiny our customers actually face.

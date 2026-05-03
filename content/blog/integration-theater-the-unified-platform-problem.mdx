@@ -1,0 +1,106 @@
+---
+title: "Integration theater: the unified platform problem"
+description: "Most \"unified\" security platforms are dashboards over disconnected tools. We explain what unified architecture actually means."
+category: "Methodology"
+author: "SPNT Engineering"
+datePublished: "2026-01-22"
+dateModified: "2026-01-22"
+---
+
+The word *unified* has been worn down by marketing. Almost every security
+vendor now claims a unified platform. Pull on the thread and the same
+pattern repeats: a shared login, a shared invoice, a shared dashboard —
+and underneath, a stack of acquired or bolted-on products that do not
+share a model of the world.
+
+This is integration theater. It looks unified. It does not behave
+unified. The cost of the difference shows up later, in the work the
+customer ends up doing.
+
+## The shape of theater
+
+Integration theater has a few reliable tells.
+
+The first is the import-export round trip. A finding from one module
+appears in another module only after a nightly job copies it across.
+Schemas drift. Severity scales disagree. By the time a finding from a
+DAST scanner shows up next to its SAST counterpart, half the context is
+gone and the deduplication logic is heuristic at best.
+
+The second tell is the navigation seam. Click on a finding in the
+posture module and you are dropped into a different application — same
+brand, different product, different conventions, different idea of what
+an asset is. The asset ID in one tool is a UUID. In another it is a
+hostname. In a third it is a cloud account ARN.
+
+The third is evidence drift. The compliance module knows that *some*
+control is satisfied because the audit module said so, two months ago,
+in a report that has since been regenerated with different findings.
+Nothing in the platform reconciles them. The auditor has to.
+
+## What unified actually requires
+
+Unification is not a UI property. It is a data property.
+
+A platform is unified when the same entity — an asset, a finding, a
+piece of evidence, a control — has one canonical representation, and
+every product surface reads from and writes to that representation
+directly. There is no copy. There is no sync job. There is no
+"integration."
+
+When a SAST scanner finds a vulnerable function and a DAST scanner
+exploits the same vulnerable endpoint, both findings should attach to
+the same vulnerability node, not two near-duplicates that someone has
+to merge later. When a hardening agent rotates a credential, the
+posture module should already know — because it is reading the same
+graph the agent just wrote to.
+
+This is not a small architectural choice. It dictates how teams are
+organized, how schemas evolve, and how acquisitions are absorbed (or,
+more often, not).
+
+## Why the industry shipped theater
+
+There is a defensible reason most platforms look the way they do. The
+modern security stack is the product of fifteen years of acquisitions.
+A vendor that buys five tools cannot rebuild them on a shared model in
+a quarter, or in a year. Building the seams is faster than re-thinking
+the foundation.
+
+The problem is that customers pay for the foundation either way. They
+pay for it in deduplication work, in evidence reconciliation, in
+audits that take longer than they should, in renewal conversations
+where the vendor cannot answer simple cross-product questions.
+
+## The Serpentine choice
+
+Serpentine is built around one canonical data model — Asset,
+Vulnerability, Evidence, Control, Risk — and every product, Postava,
+Odbrana, Napad, Regulativa, reads and writes that model directly.
+Findings from any scanner are first-class citizens of the same graph.
+Evidence collected by Postava is the same evidence Regulativa cites.
+Risk scores composed by Odbrana are the same scores Napad targets and
+Regulativa reports.
+
+We are not claiming this is the only way to build a security platform.
+We are claiming it is the way to build a *unified* one. Anything else
+is a dashboard.
+
+## What to ask a vendor
+
+If you want to test a "unified" claim in a sales call, ask three
+questions.
+
+1. **Show me the same finding in two products.** Not a copy. The same
+   record, with the same ID, written once and read in two places.
+2. **What is your canonical schema for an asset?** If the answer is
+   "it depends on the module," you are looking at theater.
+3. **What happens when a control is updated in one product?** If the
+   other products learn about it through a sync job, you will pay for
+   that sync job at audit time.
+
+These are not gotcha questions. They are how the work actually behaves
+once the demo is over.
+
+Unified is a real architectural property. It is worth holding vendors
+to it.

@@ -1,0 +1,129 @@
+---
+title: "Nine scanners, one data model — the Odbrana architecture"
+description: "How we chose one shared data model over nine separate scanners — and what that buys, both for findings and for evidence reuse."
+category: "Architecture"
+author: "SPNT Engineering"
+datePublished: "2026-02-12"
+dateModified: "2026-02-12"
+---
+
+Odbrana ships with nine scanner modules: web, code, cloud, blockchain,
+mobile, API, AI/ML, network, container. Each one is, on its own, a
+deep specialty. The temptation when you build a portfolio that wide is
+to let each scanner own its own schema — its own idea of what a
+finding is, what severity means, what evidence looks like. That is the
+shape most multi-scanner platforms take, and it is the shape we
+deliberately rejected.
+
+This post explains the trade-offs we considered and the decisions we
+made.
+
+## The two architectures
+
+There are two reasonable ways to build a multi-scanner platform.
+
+The **scanner-native** architecture lets each scanner emit findings in
+its own preferred shape. A SAST tool's finding is a triple of file,
+line, and rule ID. A CSPM tool's finding is a tuple of cloud account,
+resource, and benchmark control. A DAST tool's finding is a request,
+response, and signature. Translation happens later, at the dashboard
+layer or the report layer, and is mostly cosmetic.
+
+The **canonical** architecture defines a single schema first and
+requires every scanner to project its native output into it. The
+canonical model is opinionated — it has its own ideas about what
+constitutes an asset, a vulnerability, evidence, a control, a risk —
+and the scanners adapt to it.
+
+Canonical models cost more to build. They reward you later, every
+time two scanners need to agree about the world.
+
+## Asset → Vulnerability → Evidence → Control → Risk
+
+Odbrana's canonical model has five entity types.
+
+**Asset** is anything that can be the subject of a finding: a code
+repository, a deployed service, a cloud account, a contract, a binary,
+a network host. Assets have stable identities and parent relationships
+— a service has a repository, a repository has commits, a commit has
+files.
+
+**Vulnerability** is a defect attached to one or more assets. The
+critical word is *attached*. Two scanners that find the same defect
+attach to the same vulnerability node, not to two near-duplicates. The
+deduplication logic lives in the platform, not in a downstream report
+generator.
+
+**Evidence** is anything that supports a claim about an asset: a
+scanner output, a request/response pair, a configuration snapshot, a
+policy file, a signed attestation. Every claim Serpentine makes — *this
+control is implemented*, *this finding is exploitable*, *this risk has
+been accepted* — points to specific evidence records.
+
+**Control** is a security requirement, framework-agnostic. ISO 27001
+A.8.24, SOC 2 CC6.1, NIST CSF PR.AC-1 — these are mappings onto the
+same canonical control, not separate worlds.
+
+**Risk** is the composition of vulnerability, asset value, and
+exploitability. It is the only entity that is computed rather than
+observed.
+
+## What the graph buys you
+
+A canonical graph buys you three things that are difficult to get any
+other way.
+
+The first is **honest deduplication.** When SAST finds a SQL injection
+in a function and DAST exploits the same parameter, both findings
+attach to the same vulnerability node. The exploitability evidence
+from DAST flows into the prioritization of the SAST finding without a
+correlation job. There is nothing to correlate. They are the same
+record.
+
+The second is **evidence reuse.** A scan that produces a configuration
+snapshot for one finding produces the same snapshot for an adjacent
+finding, and for a Regulativa control assertion, and for an audit
+report. The snapshot is one record. It does not get copied; it gets
+referenced. When auditors ask whether two claims are based on the same
+evidence, the answer is structural rather than negotiated.
+
+The third is **prioritization composition.** A risk score is a
+function of asset criticality, vulnerability severity, and observed
+exploitability. Each input lives in the graph. When any of them
+changes — a service is reclassified, a CVE's KEV status flips, a new
+exploit appears in the wild — the dependent risk scores update without
+a recomputation pipeline. They are derived views.
+
+## What we gave up
+
+The canonical model is not free.
+
+We gave up some scanner-specific richness. A native CSPM tool can
+emit cloud-specific structure that is genuinely useful — IAM
+relationship graphs, network reachability paths — that does not
+translate cleanly into a generic Asset/Vulnerability shape. We kept
+that data, but it lives in a per-scanner *extensions* facet on the
+canonical record. It is preserved, but it is not first-class to
+cross-product queries. That is a real cost.
+
+We also gave up some short-term throughput. A scanner team that wants
+to ship a new detection cannot just append a new finding type. They
+have to fit it into the canonical model, or extend the model itself,
+which is a slower and more deliberate process. Over a year this is a
+gain. In any individual quarter it is a tax.
+
+## When canonical models break
+
+A canonical model fails when it pretends two unlike things are the
+same. We have learned to be conservative. Concepts that genuinely
+differ — for example, *static finding* and *runtime exploit* — get
+distinct types in the model rather than a single type with a flag. The
+flag is the temptation that ruins canonical schemas, slowly, over
+years.
+
+The model evolves. We version it. We document it. We treat it the way
+a database team treats a schema, not the way an application team
+treats a JSON shape.
+
+If you take one thing from the architecture: the canonical model is
+the product. The scanners are how it is fed.

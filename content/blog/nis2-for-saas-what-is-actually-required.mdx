@@ -1,0 +1,162 @@
+---
+title: "NIS2 for SaaS: what is actually required"
+description: "NIS2 obligations for SaaS providers, in plain language — Article 21 measures, Article 23 reporting, supply chain duties, and what's enforceable."
+category: "Industry"
+author: "SPNT Engineering"
+datePublished: "2026-04-29"
+dateModified: "2026-04-29"
+---
+
+NIS2 (Directive (EU) 2022/2555) is one of those regulations that
+generates more guidance than the text itself. Most of the guidance is
+not wrong. Much of it leaves out the parts that matter operationally.
+This post is a plain-language reading of NIS2 obligations for SaaS
+providers — what is actually written, what is enforceable, and what
+the supervisory authorities are likely to look for.
+
+We are not lawyers. This is engineering and compliance reading, not
+legal advice. Talk to counsel for the formal interpretation in your
+jurisdiction.
+
+## Are you in scope, and as what
+
+NIS2 distinguishes **essential entities** (Annex I) from **important
+entities** (Annex II). The classification matters because supervisory
+regimes and penalty ceilings differ.
+
+For SaaS providers, the relevant categories most often live in
+Annex I sector 8 (digital infrastructure) and Annex II sector 6
+(digital providers). A cloud computing service provider, a managed
+service provider, a managed security service provider, an online
+marketplace, a search engine provider, and a social networking
+service all sit in this region.
+
+The size threshold is the medium-size enterprise definition under
+EU Recommendation 2003/361/EC: at least 50 employees or annual
+turnover above €10 million. There are exceptions where smaller
+entities are still in scope — DNS service providers, top-level
+domain name registries, and certain trust service providers are
+covered regardless of size.
+
+If your SaaS sells to entities that are themselves in scope, you may
+also be pulled in via supply chain obligations even if you are not
+directly classified. We come back to that below.
+
+## Article 21: the ten measure categories
+
+Article 21(2) lists ten categories of measures that in-scope
+entities must take. It is the operational core of the directive.
+
+1. **Policies on risk analysis and information system security.**
+2. **Incident handling.**
+3. **Business continuity** — backups, recovery, crisis management.
+4. **Supply chain security**, including the security of relationships
+   with direct suppliers.
+5. **Security in network and information systems acquisition,
+   development, and maintenance**, including vulnerability handling
+   and disclosure.
+6. **Policies and procedures to assess the effectiveness of
+   cybersecurity risk-management measures.**
+7. **Basic cyber hygiene practices and cybersecurity training.**
+8. **Policies and procedures regarding the use of cryptography and,
+   where appropriate, encryption.**
+9. **Human resources security, access control policies, and asset
+   management.**
+10. **Multi-factor authentication or continuous authentication
+    solutions, secured voice/video/text communications, and secured
+    emergency communication systems.**
+
+The directive uses the phrase "appropriate and proportionate." That
+is not a loophole. Supervisory authorities can and will ask why a
+measure was omitted, and the answer must be defensible against the
+entity's risk assessment. "We did a risk assessment and decided this
+was not material" is a valid answer if the risk assessment is real.
+"We did not have a risk assessment" is not.
+
+## Article 23: incident reporting
+
+Article 23 sets a three-stage reporting timeline for significant
+incidents.
+
+**Within 24 hours** of becoming aware of a significant incident, an
+**early warning** must be submitted to the relevant CSIRT or
+competent authority. The early warning must indicate whether the
+incident is suspected to be caused by unlawful or malicious acts and
+whether it could have a cross-border impact.
+
+**Within 72 hours** of awareness, an **incident notification** must
+follow, including an initial assessment, severity, impact, and
+indicators of compromise.
+
+**Within one month** of the incident notification, a **final report**
+must be submitted, including a detailed description, the type of
+threat or root cause, applied and ongoing mitigation, and any
+cross-border impact.
+
+These deadlines run from awareness, not from incident occurrence.
+Supervisory authorities are explicit that an entity cannot avoid the
+clock by being slow to investigate.
+
+A "significant incident" is defined functionally: it has caused or is
+capable of causing severe operational disruption or financial loss,
+or has affected or is capable of affecting other natural or legal
+persons through considerable material or non-material damage. The
+threshold is meaningfully lower than legacy frameworks.
+
+## Supply chain — Article 21(2)(d)
+
+Article 21(2)(d) requires entities to consider vulnerabilities
+specific to each direct supplier and the overall quality of products
+and cybersecurity practices of their suppliers. Recital 90 makes
+clear that this extends to ICT service providers and to the entity's
+critical suppliers in the cybersecurity domain.
+
+Operationally, this means three things for SaaS providers:
+
+- A supplier register exists, with classification by criticality.
+- Each critical supplier has a documented assessment of its security
+  practices.
+- Contracts with critical suppliers include security requirements
+  that are enforceable, not aspirational.
+
+If you sell into NIS2 entities, expect to be asked for evidence
+against this from your customers. The questions are increasingly
+specific.
+
+## Article 20: governance and board accountability
+
+Article 20 makes the management body of an entity responsible for
+approving, overseeing, and being trained in cybersecurity risk
+management. Article 20(2) is explicit: members of management bodies
+must follow training, and entities must offer similar training to
+their employees on a regular basis.
+
+This is a structural change from earlier frameworks. The board cannot
+delegate the obligation to the CISO. The board can be held personally
+liable for non-compliance, including monetary fines and, in some
+member-state implementations, temporary prohibitions on holding
+managerial functions.
+
+For SaaS, the practical implication is that board minutes need to
+show cybersecurity risk has been substantively reviewed — not just
+filed.
+
+## What is actually enforceable
+
+NIS2 is a directive, transposed by each member state into national
+law, with member-state-specific supervisory authorities and
+penalties. The directive sets ceilings: for essential entities, up to
+€10 million or 2% of total worldwide annual turnover; for important
+entities, up to €7 million or 1.4%.
+
+Enforcement priorities vary by member state but cluster around the
+same themes: incident reporting timelines, supply chain
+documentation, board-level governance, and Article 21 measures with
+demonstrable evidence.
+
+If you take one thing from NIS2: the directive is evidence-driven,
+not policy-driven. Policies that are not enforced, measures that are
+not implemented, and reports that arrive on day five rather than day
+one are the failure modes that supervisory authorities are most
+likely to examine. Preparing for NIS2 is, in practice, preparing to
+produce evidence on demand.

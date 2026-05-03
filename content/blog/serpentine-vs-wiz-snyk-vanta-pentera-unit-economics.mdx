@@ -1,0 +1,123 @@
+---
+title: "Serpentine vs Wiz, Snyk, Vanta, Pentera — unit economics"
+description: "Why integrated platforms have structurally better unit economics than five point tools — and what that means for your renewal."
+category: "Comparison"
+author: "SPNT Engineering"
+datePublished: "2026-03-25"
+dateModified: "2026-03-25"
+---
+
+The standard mid-market security stack has settled into a recognizable
+shape: a cloud posture tool, an application security tool, a GRC tool,
+an offensive testing tool, and some glue. Each tool is competent in
+its lane. Together they produce a renewal cost that grows roughly
+linearly with the number of tools, and an integration cost that grows
+faster than that.
+
+This post compares Serpentine to a representative version of that
+stack and looks at where the unit economics actually come from. We
+are not arguing that the point tools are bad products — many of them
+are excellent in their domain. We are arguing that the architecture of
+five tools is not the architecture of one platform, and that the
+difference shows up in the bill.
+
+## What the comparison is and is not
+
+We are comparing architectures, not feature lists. A feature-list
+comparison would pit a cloud posture module against a dedicated CSPM
+vendor, an application security module against a dedicated AppSec
+vendor, and so on. In a feature-list cell-by-cell comparison, the
+specialist usually wins.
+
+The architectural comparison asks a different question: what does it
+cost, in money and in human work, to operate the *combined* stack
+over a contract cycle? That is the question customers actually answer
+at renewal time, and the answer is dominated by integration costs, not
+feature cells.
+
+## Where the integrated stack wins on cost
+
+Three forces compound in favor of an integrated platform.
+
+**Evidence reuse.** A configuration snapshot collected by Postava is
+the same snapshot Regulativa cites for a control, and the same
+snapshot Odbrana attaches to a related finding. In a five-tool stack,
+the equivalent snapshot is collected three times — once by the
+posture tool, once by the GRC tool, once by the offensive tool —
+because none of them trust the others' representation of the world.
+Each collection has a cost: API calls, agent overhead, customer time,
+review effort.
+
+**Schema reconciliation.** Five tools produce five schemas. The work
+of mapping them into a coherent picture lives somewhere — usually
+inside the customer, often inside a security engineer's head. We have
+seen organizations where two FTEs effectively do nothing but
+reconcile asset inventories across tools. That cost does not show up
+on any vendor's invoice but it is a real recurring expense.
+
+**Procurement and renewal overhead.** Each tool has its own contract,
+SOC 2 review, DPA, pricing model, sales cycle, and renewal
+negotiation. None of these scale. Procurement teams quietly absorb the
+work, then pass it back to security teams as deadline pressure.
+
+A unified platform does not eliminate these costs — it does not need
+to — but it absorbs most of them into one schema, one contract, one
+collection layer. The customer's marginal cost per added scope is
+small.
+
+## Where point tools win
+
+We should be honest about the other side.
+
+**Depth in a single domain.** A focused CSPM vendor with a hundred
+engineers on cloud posture will have detection coverage that no
+generalist platform can match in that one slice. Customers whose
+threat model is dominated by cloud misconfiguration are correct to
+weight that depth heavily.
+
+**Speed to a new ecosystem.** When a new cloud, language, or
+framework appears, a focused vendor will often ship support for it
+faster than an integrated platform that has to fit the new ecosystem
+into its canonical model.
+
+**Independence from a single vendor.** Some buyers genuinely value
+the ability to swap one component without disrupting the others. A
+unified platform is a stronger commitment.
+
+These trade-offs are real, and we do not pretend otherwise.
+
+## What the comparison looks like in practice
+
+Consider four functions: cloud posture, code/application security,
+GRC, and offensive testing. In a point-tool stack, these are four
+contracts, four schemas, four control mappings, four sets of
+credentials, four sets of evidence collection, four renewal
+conversations.
+
+In Serpentine, they are four product surfaces — Postava, Odbrana,
+Regulativa, Napad — over one canonical model. The same asset record
+is read by all four. The same control mapping is referenced by all
+four. The same evidence record can satisfy claims in any of the four.
+
+The savings are not magic. They come from the fact that work done
+once does not have to be done three more times in slightly different
+shapes.
+
+## What this means at renewal
+
+If you are evaluating Serpentine against a stack of point tools, the
+honest comparison has three columns: per-tool licence cost,
+integration cost (often hidden), and depth-in-domain cost (where
+specialists genuinely lead). Serpentine should win on the first two
+and concede on the third in any single dimension.
+
+We think that is the right trade for most buyers most of the time.
+For organizations whose threat model genuinely requires best-in-class
+depth in one specific area, a point tool is still defensible. The
+worst answer is the unconsidered five-tool stack, where every line
+item was best-in-class on the day it was bought, and the integration
+work has been someone's full-time job ever since.
+
+The renewal conversation is the right place to do this math. We
+encourage customers to do it in front of us. The architecture should
+hold up under that scrutiny, and we think it does.

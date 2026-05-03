@@ -1,0 +1,413 @@
+@import "tailwindcss";
+
+/*
+  SERPENTINE — design tokens.
+  Two surface families (Obsidian + Bronze dark, Stone + Ink light).
+  Geist Sans + Geist Mono via next/font/google. No serif. No third typeface.
+*/
+
+:root {
+  /* Dark surface — Obsidian + Bronze */
+  --obsidian-base:        #07070a;
+  --obsidian-raised:      #0f0f14;
+  --obsidian-line:        rgba(243,238,218,0.10);
+  --obsidian-line-strong: rgba(243,238,218,0.18);
+
+  /* Light surface — Stone + Ink */
+  --stone-base:           #faf9f5;
+  --stone-raised:         #ffffff;
+  --stone-line:           #e8e3d8;
+  --stone-line-strong:    #d4cebf;
+
+  /* Accent — bronze (sole accent across both surfaces) */
+  --bronze:               #c9a66a;
+  --bronze-deep:          #a8884e;
+  --bronze-soft:          rgba(201,166,106,0.18);
+  --bronze-deep-on-light: #8a6e3e;
+
+  /* Text — dark surface */
+  --ink-on-dark:          #f3eeda;
+  --ink-on-dark-soft:     rgba(243,238,218,0.72);
+  --ink-on-dark-muted:    rgba(243,238,218,0.45);
+
+  /* Text — light surface */
+  --ink:                  #0c0c10;
+  --ink-soft:             #4a4a4a;
+  --ink-muted:            #8a8884;
+
+  /* Severity (dashboard mocks only) */
+  --sev-crit: #ff5860;
+  --sev-high: #ff9a3a;
+  --sev-med:  #ffd24a;
+  --sev-low:  #4ad295;
+
+  /* Radius scale */
+  --r-sm:   6px;
+  --r-md:   8px;
+  --r-lg:   12px;
+  --r-hero: 16px;
+
+  /* Page transition */
+  --transition-page:    280ms cubic-bezier(.2,.7,.2,1);
+  --transition-fast:    150ms ease-out;
+  --transition-medium:  300ms cubic-bezier(.2,.7,.2,1);
+}
+
+@theme inline {
+  --color-obsidian-base:    var(--obsidian-base);
+  --color-obsidian-raised:  var(--obsidian-raised);
+  --color-stone-base:       var(--stone-base);
+  --color-stone-raised:     var(--stone-raised);
+  --color-bronze:           var(--bronze);
+  --color-bronze-deep:      var(--bronze-deep);
+  --color-ink:              var(--ink);
+  --color-ink-on-dark:      var(--ink-on-dark);
+
+  --font-sans: var(--font-geist), system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular,
+    "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+
+  --container-content: 1200px;
+}
+
+/* Default border-color matches the surface a component sits on. Components
+   set their own border-color explicitly via tokens; we no longer force a
+   default obsidian line everywhere (that bled dark hairlines into light pages). */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+/* Smooth scroll respects reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background: var(--stone-base);
+  color: var(--ink);
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+
+::selection {
+  background: var(--bronze);
+  color: var(--obsidian-base);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201,166,106,0.5);
+  border-radius: 4px;
+}
+
+/* === Type scale ================================================ */
+.t-hero {
+  font-family: var(--font-geist);
+  font-size: clamp(40px, 6.5vw, 64px);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.028em;
+}
+.t-section {
+  font-family: var(--font-geist);
+  font-size: clamp(30px, 4.4vw, 44px);
+  font-weight: 500;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+}
+.t-feature {
+  font-family: var(--font-geist);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 600;
+  line-height: 1.10;
+  letter-spacing: -0.022em;
+}
+.t-body-h {
+  font-family: var(--font-geist);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.30;
+  letter-spacing: -0.018em;
+}
+.t-lead {
+  font-family: var(--font-geist);
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+.t-body {
+  font-family: var(--font-geist);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+.t-small {
+  font-family: var(--font-geist);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+.t-eyebrow {
+  font-family: var(--font-geist-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.0;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bronze);
+}
+.t-eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+}
+.t-eyebrow-on-light { color: var(--bronze-deep-on-light); }
+
+.t-data {
+  font-family: var(--font-geist-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+.t-label {
+  font-family: var(--font-geist-mono);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.t-caption {
+  font-family: var(--font-geist-mono);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+}
+
+/* === Surfaces =================================================== */
+.surface-dark {
+  background: var(--obsidian-base);
+  color: var(--ink-on-dark);
+}
+.surface-dark-raised {
+  background: var(--obsidian-raised);
+  color: var(--ink-on-dark);
+}
+.surface-light {
+  background: var(--stone-base);
+  color: var(--ink);
+}
+.surface-light-raised {
+  background: var(--stone-raised);
+  color: var(--ink);
+}
+
+/* === Section padding ============================================ */
+.section-pad {
+  padding-top: clamp(56px, 8vw, 96px);
+  padding-bottom: clamp(56px, 8vw, 96px);
+}
+.section-pad-tight {
+  padding-top: clamp(40px, 5vw, 64px);
+  padding-bottom: clamp(40px, 5vw, 64px);
+}
+
+/* === Subtle dotted grid (for dark surface decoration) =========== */
+.bg-dot-grid {
+  background-image: linear-gradient(rgba(201,166,106,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,166,106,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* === MDX prose ================================================== */
+.mdx {
+  font-family: var(--font-geist);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+}
+.mdx.on-dark { color: var(--ink-on-dark); }
+
+.mdx h1 { font-size: clamp(32px, 4vw, 44px); font-weight: 500; line-height: 1.05; letter-spacing: -0.022em; margin-top: 0; margin-bottom: 0.6em; }
+.mdx h2 { font-size: 26px; font-weight: 600; line-height: 1.18; letter-spacing: -0.018em; margin-top: 2em; margin-bottom: 0.5em; }
+.mdx h3 { font-size: 20px; font-weight: 600; line-height: 1.30; margin-top: 1.6em; margin-bottom: 0.4em; }
+.mdx p, .mdx ul, .mdx ol { margin: 0.9em 0; }
+.mdx ul, .mdx ol { padding-left: 1.4em; }
+.mdx ul li { list-style: none; position: relative; padding-left: 18px; }
+.mdx ul li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--bronze); }
+.mdx ol li { list-style: decimal; padding-left: 4px; }
+.mdx li { margin-bottom: 0.35em; }
+
+.mdx a {
+  color: var(--bronze-deep-on-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness 100ms;
+}
+.mdx a:hover { text-decoration-thickness: 2px; }
+.mdx.on-dark a { color: var(--bronze); }
+
+.mdx h1 a, .mdx h2 a, .mdx h3 a, .mdx h4 a {
+  color: inherit;
+  text-decoration: none;
+}
+.mdx h1 a:hover, .mdx h2 a:hover, .mdx h3 a:hover, .mdx h4 a:hover {
+  color: var(--bronze-deep-on-light);
+}
+.mdx.on-dark h1 a:hover, .mdx.on-dark h2 a:hover, .mdx.on-dark h3 a:hover {
+  color: var(--bronze);
+}
+
+.mdx blockquote {
+  border-left: 2px solid var(--bronze);
+  padding-left: 20px;
+  color: var(--ink-soft);
+  margin: 1.5em 0;
+  font-style: normal;
+}
+.mdx.on-dark blockquote { color: var(--ink-on-dark-soft); }
+
+.mdx hr {
+  border: 0;
+  border-top: 1px solid var(--stone-line);
+  margin: 3em 0;
+}
+.mdx.on-dark hr { border-top-color: var(--obsidian-line); }
+
+.mdx code {
+  font-family: var(--font-geist-mono);
+  font-size: 0.92em;
+  font-weight: 500;
+  background: var(--stone-line);
+  border-radius: var(--r-sm);
+  padding: 0.12em 0.4em;
+}
+.mdx.on-dark code { background: var(--obsidian-raised); }
+
+.mdx pre {
+  font-family: var(--font-geist-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  background: var(--stone-base);
+  border: 1px solid var(--stone-line);
+  border-radius: var(--r-lg);
+  padding: 20px 24px;
+  overflow-x: auto;
+}
+.mdx.on-dark pre {
+  background: var(--obsidian-raised);
+  border-color: var(--obsidian-line);
+}
+.mdx pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.mdx table { width: 100%; border-collapse: collapse; margin: 1.4em 0; font-size: 15px; }
+.mdx th, .mdx td { border: 1px solid var(--stone-line); padding: 10px 14px; text-align: left; vertical-align: top; }
+.mdx th { background: var(--stone-base); font-weight: 600; }
+.mdx.on-dark th, .mdx.on-dark td { border-color: var(--obsidian-line); }
+.mdx.on-dark th { background: var(--obsidian-raised); }
+
+/* === Utility =================================================== */
+.balance { text-wrap: balance; }
+.pretty  { text-wrap: pretty; }
+
+/* === View Transitions ========================================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+  animation-timing-function: cubic-bezier(.2,.7,.2,1);
+}
+.logo-mark { view-transition-name: serpentine-logo; }
+
+/* === Header surface utility classes ============================ */
+/* Tailwind v4 doesn't reliably apply opacity modifiers (`/80`) to arbitrary
+   var() colors, so we declare the scrolled-state header backgrounds as
+   plain CSS classes using rgba directly. */
+.header-bg-dark {
+  background: rgba(7, 7, 10, 0.82);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--obsidian-line);
+}
+.header-bg-light {
+  background: rgba(250, 249, 245, 0.85);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--stone-line);
+}
+.header-bg-transparent {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+/* === Hero entrance animation =================================== */
+/* Subtle fade + lift, staggered via animation-delay on each child */
+@keyframes serp-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.serp-rise {
+  opacity: 0;
+  animation: serp-rise 700ms cubic-bezier(.2,.7,.2,1) forwards;
+}
+.serp-rise-1 { animation-delay: 80ms; }
+.serp-rise-2 { animation-delay: 200ms; }
+.serp-rise-3 { animation-delay: 320ms; }
+.serp-rise-4 { animation-delay: 440ms; }
+.serp-rise-5 { animation-delay: 560ms; }
+
+/* Slow ambient zoom on hero photos — barely perceptible, adds life */
+@keyframes serp-ambient-zoom {
+  from { transform: scale(1.0); }
+  to   { transform: scale(1.04); }
+}
+.serp-ambient-zoom {
+  animation: serp-ambient-zoom 12s ease-out forwards;
+  transform-origin: center;
+}
+
+/* Card hover lift — applied via .serp-card-hover utility */
+.serp-card-hover {
+  transition: transform 200ms cubic-bezier(.2,.7,.2,1),
+              box-shadow 250ms cubic-bezier(.2,.7,.2,1),
+              border-color 200ms ease;
+}
+.serp-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(7, 7, 10, 0.08);
+}
+.surface-dark .serp-card-hover:hover,
+.surface-dark-raised .serp-card-hover:hover {
+  border-color: var(--obsidian-line-strong);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
